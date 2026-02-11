@@ -3,118 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Todo </title>
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background: #000;
-            color: #fff;
-            font-family: Arial, sans-serif;
-            padding: 20px;
-            max-width: 500px;
-            margin: auto;
-        }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-
-        .input-area {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        input {
-            flex: 1;
-            padding: 12px;
-            background: #111;
-            border: 1px solid #333;
-            color: #fff;
-            font-size: 16px;
-        }
-
-        button {
-            padding: 12px 20px;
-            background: #444;
-            border: none;
-            color: #fff;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        button:hover {
-            background: #555;
-        }
-
-        .todo {
-            background: #222;
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-        }
-    </style>
+    <title>todo list </title>
 </head>
-
 <body>
+    <form onsubmit="addtodo(event)">
+         <h1>Todo List</h1>
 
-    <h1>Todo List</h1>
+        <div class="input area">
+            <input type="text"id="input" placeholder="add todo">
+            <button type="submit">+</button>
+        </div>
 
-    <div class="input-area">
-        <input type="text" id="input" placeholder="Add todo...">
-        <button onclick="addTodo()">+</button>
-    </div>
-
-    <div id="list"></div>
-
+        <div id="list"></div>
+    </form>
     <script>
         let todos = [
-            { id: 1, text: "Learn JS" },
-            { id: 2, text: "Build Iris" }
+            {id : 1 , text : "first todo"},
+            {id : 2 , text : "second todo"},
         ];
+        function addtodo (event){
+            event.preventDefault();
+            let leapstart = document.getElementById("input").value;
+            todos.push({
+                id : todos.length + 1 ,
+                text : leapstart ,
 
-        let id = 3;
-
-        function showTodos() {
-            let html = "";
-            for (let todo of todos) {
-                html += `
-                    <div class="todo">
-                        ${todo.text}
-                    </div>
-                `;
-            }
-            document.getElementById("list").innerHTML = html;
-        }
-
-        function addTodo() {
-            let text = document.getElementById("input").value.trim();
-            if (text === "") return;
-
-            todos.unshift({
-                id: id++,
-                text: text
             });
-
             document.getElementById("input").value = "";
-            showTodos();
+            showtodos()
+        }
+        
+        function showtodos (){
+        let todosDiv = document.getElementById("list");
+        todosDiv.innerHTML = "";
+        for (i=0 ; i < todos.length ; i++) {
+            todosDiv.innerHTML += `<p>${todos[i].text}</p>`;
+        }
         }
 
-        document.getElementById("input").addEventListener("keypress", function (e) {
-            if (e.key === "Enter") {
-                addTodo();
-            }
-        });
-
-        showTodos();
+        showtodos()
     </script>
-
 </body>
 </html>
